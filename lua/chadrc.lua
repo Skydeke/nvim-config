@@ -16,6 +16,8 @@ M.mason = {
     "clang-format", -- CPP Formatter
     "codelldb", -- Debugger
     "ltex-ls", -- Spelling LSP
+    "dockerfile-language-server", -- Dockerfile LSP
+    "docker-compose-language-service", -- Compose LSP
   },
 }
 

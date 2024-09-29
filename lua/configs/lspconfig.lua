@@ -159,6 +159,10 @@ local servers = {
     end,
   },
   lua_ls = {},
+  dockerls = {},
+  docker_compose_language_service = {
+    filetypes = { "yaml" },
+  },
 }
 
 for name, opts in pairs(servers) do
