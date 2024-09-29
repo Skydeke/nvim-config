@@ -18,6 +18,10 @@ M.mason = {
     "ltex-ls", -- Spelling LSP
     "dockerfile-language-server", -- Dockerfile LSP
     "docker-compose-language-service", -- Compose LSP
+    "helm-ls", -- Helm LSP
+    "yamlfix", -- Yaml Formatter
+    "yaml-language-server", -- Yaml LSP
+    "json-lsp", -- JSON LSP
   },
 }
 
