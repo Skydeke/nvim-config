@@ -5,6 +5,19 @@ require "nvchad.options"
 local o = vim.o
 
 o.relativenumber = true
+o.foldenable = false -- Dont fold on File-Open
+o.foldlevel = 99 -- Start with all folds open
+
+vim.api.nvim_create_autocmd({ "FileType" }, {
+  callback = function()
+    if require("nvim-treesitter.parsers").has_parser() then
+      o.foldmethod = "expr"
+      o.foldexpr = "nvim_treesitter#foldexpr()"
+    else
+      o.foldmethod = "syntax"
+    end
+  end,
+})
 
 vim.api.nvim_create_user_command("FormatDisable", function(args)
   if args.bang then
@@ -17,6 +30,7 @@ end, {
   desc = "Disable autoformat-on-save",
   bang = true,
 })
+
 vim.api.nvim_create_user_command("FormatEnable", function()
   vim.b.disable_autoformat = false
   vim.g.disable_autoformat = false
@@ -39,3 +53,18 @@ vim.api.nvim_create_autocmd("VimLeavePre", {
     vim.fn.jobstart("alacritty msg --socket $ALACRITTY_SOCKET config -w $ALACRITTY_WINDOW_ID -r", { detach = true })
   end,
 })
+
+vim.filetype.add {
+  pattern = { [".*/hypr/.*%.conf"] = "hyprlang" },
+}
+
+vim.filetype.add {
+  extension = {
+    gotmpl = "gotmpl",
+  },
+  pattern = {
+    [".*/templates/.*%.tpl"] = "helm",
+    [".*/templates/.*%.ya?ml"] = "helm",
+    ["helmfile.*%.ya?ml"] = "helm",
+  },
+}

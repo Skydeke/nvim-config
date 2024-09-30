@@ -163,9 +163,7 @@ local servers = {
   docker_compose_language_service = {
     filetypes = { "yaml" },
   },
-  helm_ls = {
-    filetypes = { "yaml" },
-  },
+  helm_ls = {},
   yamlls = {
     settings = {
       yaml = {
