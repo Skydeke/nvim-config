@@ -15,6 +15,7 @@ vim.g.vimtex_compiler_latexmk = {
   },
 }
 vim.g.vimtex_quickfix_ignore_mode = 0
+vim.g.vimtex_fold_enabled = 1
 vim.g.vimtex_fold_types = {
   cmd_addplot = {
     cmds = { "addplot[+3]?" },

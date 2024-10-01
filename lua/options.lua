@@ -18,6 +18,14 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
     end
   end,
 })
+-- LaTeX use VimTex folding
+vim.api.nvim_create_autocmd({ "FileType" }, {
+  pattern = "tex",
+  callback = function()
+    vim.o.foldmethod = "expr"
+    vim.o.foldexpr = "vimtex#fold#level(v:lnum)"
+  end,
+})
 
 vim.api.nvim_create_user_command("FormatDisable", function(args)
   if args.bang then
