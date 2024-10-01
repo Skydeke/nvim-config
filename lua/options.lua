@@ -68,3 +68,10 @@ vim.filetype.add {
     ["helmfile.*%.ya?ml"] = "helm",
   },
 }
+
+vim.filetype.add {
+  filename = {
+    ["docker-compose.yaml"] = "yaml.docker-compose",
+    ["docker-compose.yml"] = "yaml.docker-compose", -- handle both extensions
+  },
+}

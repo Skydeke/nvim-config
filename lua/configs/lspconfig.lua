@@ -160,9 +160,7 @@ local servers = {
   },
   lua_ls = {},
   dockerls = {},
-  docker_compose_language_service = {
-    filetypes = { "yaml" },
-  },
+  docker_compose_language_service = {},
   helm_ls = {},
   yamlls = {
     settings = {
