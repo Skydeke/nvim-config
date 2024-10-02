@@ -1,7 +1,4 @@
 require "nvchad.options"
-
--- add yours here!
-
 local o = vim.o
 
 o.relativenumber = true
@@ -38,7 +35,6 @@ end, {
   desc = "Disable autoformat-on-save",
   bang = true,
 })
-
 vim.api.nvim_create_user_command("FormatEnable", function()
   vim.b.disable_autoformat = false
   vim.g.disable_autoformat = false
@@ -54,7 +50,6 @@ vim.api.nvim_create_autocmd("VimEnter", {
     vim.fn.system "alacritty msg --socket $ALACRITTY_SOCKET config -w $ALACRITTY_WINDOW_ID options 'window.padding.x=0' 'window.padding.y=0' 'window.dynamic_padding=false'"
   end,
 })
-
 vim.api.nvim_create_autocmd("VimLeavePre", {
   group = alacrittyAutoGroup,
   callback = function()
@@ -65,7 +60,6 @@ vim.api.nvim_create_autocmd("VimLeavePre", {
 vim.filetype.add {
   pattern = { [".*/hypr/.*%.conf"] = "hyprlang" },
 }
-
 vim.filetype.add {
   extension = {
     gotmpl = "gotmpl",
@@ -76,7 +70,6 @@ vim.filetype.add {
     ["helmfile.*%.ya?ml"] = "helm",
   },
 }
-
 vim.filetype.add {
   filename = {
     ["docker-compose.yaml"] = "yaml.docker-compose",

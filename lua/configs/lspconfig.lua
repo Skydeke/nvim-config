@@ -111,6 +111,8 @@ capabilities.textDocument.completion.completionItem = {
 }
 capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
+require("java").setup()
+
 local servers = {
   clangd = {
     on_attach = function(client, bufnr)
@@ -173,6 +175,7 @@ local servers = {
     },
   },
   jsonls = {},
+  jdtls = {},
 }
 
 for name, opts in pairs(servers) do
