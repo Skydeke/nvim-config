@@ -97,7 +97,7 @@ local on_attach = function(client, bufnr)
 end
 
 -- Snippet, autocompletion support
-local capabilities = vim.lsp.protocol.make_client_capabilities()
+local capabilities = configs.capabilities
 capabilities.textDocument.completion.completionItem = {
   documentationFormat = { "markdown", "plaintext" },
   snippetSupport = true,
@@ -114,12 +114,7 @@ capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 require("java").setup()
 
 local servers = {
-  clangd = {
-    on_attach = function(client, bufnr)
-      client.server_capabilities.signatureHelpProvider = false
-      on_attach(client, bufnr)
-    end,
-  },
+  clangd = {},
   ltex = {
     settings = {
       ltex = {
