@@ -5,6 +5,7 @@ local options = {
   formatters_by_ft = {
     lua = { "stylua" },
     yaml = { "yamlfix" },
+    tex = { "latexindent" },
     -- css = { "prettier" },
     -- html = { "prettier" },
   },

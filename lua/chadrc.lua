@@ -22,6 +22,7 @@ M.mason = {
     "yamlfix", -- Yaml Formatter
     "yaml-language-server", -- Yaml LSP
     "json-lsp", -- JSON LSP
+    "latexindent", -- LaTeX formatter
   },
 }
 
