@@ -4,8 +4,13 @@ return {
     event = "BufWritePre", -- uncomment for format on save
     opts = require "configs.conform",
   },
-
-  -- These are some examples, uncomment them if you want to see them work!
+  {
+    "folke/neoconf.nvim",
+    lazy = false,
+    config = function()
+      require "configs.neoconf"
+    end,
+  },
   {
     "neovim/nvim-lspconfig",
     config = function()
