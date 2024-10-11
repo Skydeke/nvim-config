@@ -39,6 +39,7 @@ return {
         "fish",
         "dockerfile",
         "java",
+        "groovy",
       },
     },
   },

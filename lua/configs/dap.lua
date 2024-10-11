@@ -14,6 +14,25 @@ dap.adapters.cpp = {
 
 -- Java-Adapter is loaded by nvim-java require(java).setup
 
+-- Define your keybindings
+local debugger_mappings = {
+  n = {
+    -- LSP Diagnostics
+    ["<leader>do"] = {
+      function()
+        require("dapui").open()
+      end,
+      { desc = "Open DAP-UI" },
+    },
+    ["<leader>dc"] = {
+      function()
+        require("dapui").close()
+      end,
+      { desc = "Close DAP-UI" },
+    },
+  },
+}
+
 -- Create the target directory if it doesn't exist
 local target_dir = "target"
 local function ensure_target_directory()
@@ -39,25 +58,6 @@ local function setup_debugger_mappings(bufnr)
   -- Check if the current buffer has a DAP configuration
   local configurations = dap.configurations[vim.bo.filetype]
   if configurations and #configurations > 0 then
-    -- Define your keybindings
-    local debugger_mappings = {
-      n = {
-        -- LSP Diagnostics
-        ["<leader>do"] = {
-          function()
-            require("dapui").open()
-          end,
-          { desc = "Open DAP-UI" },
-        },
-        ["<leader>dc"] = {
-          function()
-            require("dapui").close()
-          end,
-          { desc = "Close DAP-UI" },
-        },
-      },
-    }
-
     -- Set the keybindings with options
     local opts = { buffer = bufnr, silent = true }
     for mode, maps in pairs(debugger_mappings) do
