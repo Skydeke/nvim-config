@@ -5,7 +5,7 @@ vim.g.vimtex_compiler_method = "latexmk"
 vim.g.vimtex_compiler_latexmk = {
   callback = 1,
   continuous = 1,
-  executable = "/home/david/.config/nvim/latex/latexmk",
+  executable = vim.fn.expand "~" .. "/.config/nvim/latex/latexmk",
   options = {
     "-shell-escape",
     "-verbose",
