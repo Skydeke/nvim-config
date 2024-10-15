@@ -40,6 +40,7 @@ return {
         "dockerfile",
         "java",
         "groovy",
+        "python",
       },
     },
   },
@@ -80,6 +81,13 @@ return {
     "mfussenegger/nvim-dap",
     config = function(_, _)
       require "configs.dap"
+    end,
+  },
+  {
+    "mfussenegger/nvim-dap-python",
+    ft = "python",
+    config = function()
+      require("dap-python").setup "python"
     end,
   },
   {

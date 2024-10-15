@@ -23,6 +23,9 @@ M.mason = {
     "yaml-language-server", -- Yaml LSP
     "json-lsp", -- JSON LSP
     "latexindent", -- LaTeX formatter
+    "pyright", -- Python Static Type checker
+    "python-lsp-server", -- Python LSP
+    "debugpy", -- Python Debugger
   },
 }
 

@@ -203,6 +203,19 @@ local servers = {
   },
   jsonls = {},
   jdtls = {},
+  pylsp = {
+    settings = {
+      pylsp = {
+        plugins = {
+          pycodestyle = {
+            ignore = { "W391" },
+            maxLineLength = 150,
+          },
+        },
+      },
+    },
+  },
+  pyright = {},
 }
 
 for name, opts in pairs(servers) do
