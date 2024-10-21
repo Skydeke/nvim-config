@@ -6,6 +6,7 @@ local options = {
     lua = { "stylua" },
     yaml = { "yamlfix" },
     tex = { "latexindent" },
+    python = { "black" },
     -- css = { "prettier" },
     -- html = { "prettier" },
   },

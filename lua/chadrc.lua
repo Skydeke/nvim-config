@@ -26,6 +26,7 @@ M.mason = {
     "pyright", -- Python Static Type checker
     "python-lsp-server", -- Python LSP
     "debugpy", -- Python Debugger
+    "black", -- Pythonf Formatter
   },
 }
 
