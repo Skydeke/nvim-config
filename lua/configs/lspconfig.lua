@@ -151,6 +151,18 @@ local servers = {
     settings = {
       ltex = {
         language = "en-GB",
+        enabled = {
+          "bibtex",
+          "gitcommit",
+          "markdown",
+          "org",
+          "tex",
+          "restructuredtext",
+          "latex",
+          "context",
+          "mail",
+          "plaintext",
+        },
       },
     },
     on_attach = function(client, bufnr)
@@ -216,6 +228,9 @@ local servers = {
     },
   },
   pyright = {},
+  html = {},
+  cssls = {},
+  ts_ls = {},
 }
 
 for name, opts in pairs(servers) do

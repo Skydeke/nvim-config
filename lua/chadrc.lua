@@ -27,6 +27,10 @@ M.mason = {
     "python-lsp-server", -- Python LSP
     "debugpy", -- Python Debugger
     "black", -- Pythonf Formatter
+    "html-lsp", -- HTML-LSP
+    "css-lsp", -- CSS-LSP
+    "typescript-language-server", -- TS/JS LSP
+    "firefox-debug-adapter", -- DAP Firefox
   },
 }
 

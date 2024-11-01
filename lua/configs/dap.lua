@@ -12,7 +12,62 @@ dap.adapters.cpp = {
   },
 }
 
+dap.adapters.firefox = {
+  type = "executable",
+  executable = {
+    command = vim.fn.stdpath "data" .. "/mason/bin/firefox-debug-adapter",
+  },
+}
+
 -- Java-Adapter is loaded by nvim-java require(java).setup
+
+dap.configurations.html = {
+  {
+    type = "firefox",
+    name = "FF: Launch",
+    request = "launch",
+    reAttach = "true",
+    url = "http://localhost/index.html",
+    pathMappings = {
+      {
+        url = "http://localhost",
+        path = "${workspaceFolder}",
+      },
+    },
+    log = {
+      fileName = "${workspaceFolder}/log.txt",
+      fileLevel = {
+        default = "Debug",
+      },
+    },
+    firefoxExecutable = vim.fn.stdpath "data" .. "/mason/bin/firefox",
+    firefoxArgs = { "-private", "-purgecaches" },
+  },
+  {
+    type = "firefox",
+    name = "FF: Localhost webserver",
+    request = "launch",
+    reAttach = "true",
+    url = "http://localhost/index.html",
+    webRoot = "${workspaceFolder}",
+    log = {
+      fileName = "${workspaceFolder}/log.txt",
+      fileLevel = {
+        default = "Debug",
+      },
+    },
+    firefoxExecutable = vim.fn.stdpath "data" .. "/mason/bin/firefox",
+    firefoxArgs = { "-private", "-purgecaches" },
+  },
+  {
+    name = "FF: Attach to localhost",
+    type = "firefox",
+    request = "attach",
+    url = "http://127.0.0.1/",
+    firefoxExecutable = vim.fn.stdpath "data" .. "/mason/bin/firefox",
+    firefoxArgs = { "-private", "-purgecaches" },
+  },
+}
 
 -- Define your keybindings
 local debugger_mappings = {

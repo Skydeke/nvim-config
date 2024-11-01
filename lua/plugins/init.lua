@@ -41,6 +41,7 @@ return {
         "java",
         "groovy",
         "python",
+        "javascript",
       },
     },
   },
