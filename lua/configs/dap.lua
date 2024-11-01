@@ -79,12 +79,14 @@ local debugger_mappings = {
     ["<leader>do"] = {
       function()
         require("dapui").open()
+        vim.cmd "NvimTreeClose"
       end,
       { desc = "Open DAP-UI" },
     },
     ["<leader>dc"] = {
       function()
         require("dapui").close()
+        vim.cmd "NvimTreeOpen"
       end,
       { desc = "Close DAP-UI" },
     },
@@ -165,8 +167,6 @@ end
 -- Autocommand to set up DAP keybindings on BufEnter for relevant filetypes
 vim.api.nvim_create_autocmd("BufEnter", {
   callback = function(args)
-    if vim.tbl_contains(config_enhancements_fts, vim.bo[args.buf].filetype) then
-      setup_debugger_mappings(args.buf)
-    end
+    setup_debugger_mappings(args.buf)
   end,
 })
