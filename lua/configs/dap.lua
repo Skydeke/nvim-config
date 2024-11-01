@@ -2,6 +2,9 @@ local dap = require "dap"
 
 require("dap.ext.vscode").load_launchjs()
 
+local config_enhancements_fts = { "java" } -- Automatically set cwd to target if it was unset for listed langs
+local target_dir = "target"
+
 dap.adapters.cpp = {
   name = "codelldb server",
   type = "server",
@@ -88,21 +91,23 @@ local debugger_mappings = {
   },
 }
 
--- Create the target directory if it doesn't exist
-local target_dir = "target"
+local function get_target_directory_path()
+  return vim.fn.getcwd() .. "/" .. target_dir
+end
+
 local function ensure_target_directory()
-  local target_path = vim.fn.getcwd() .. "/" .. target_dir
+  local target_path = get_target_directory_path()
   if vim.fn.isdirectory(target_path) == 0 then
     vim.fn.mkdir(target_path, "p")
   end
   return target_path
 end
 
--- Function to update `cwd` in a configuration only if it wasn't already set
+-- Function to update `cwd` in configurations only if it's in specified filetypes
 local function set_cwd_in_configurations(configs)
   for _, config in ipairs(configs) do
-    if not config.cwd then -- Only set cwd if it wasn't already configured
-      config.cwd = ensure_target_directory()
+    if not config.cwd then
+      config.cwd = get_target_directory_path() -- Set `cwd` to target path without creating it yet
     end
   end
 end
@@ -130,8 +135,9 @@ local original_configurations = dap.configurations
 
 dap.configurations = setmetatable({}, {
   __newindex = function(t, lang, configs)
-    -- When new configurations are added, update cwd and store them
-    set_cwd_in_configurations(configs)
+    if vim.tbl_contains(config_enhancements_fts, lang) then
+      set_cwd_in_configurations(configs)
+    end
     rawset(t, lang, configs)
     setup_debugger_mappings(vim.api.nvim_get_current_buf())
   end,
@@ -140,14 +146,27 @@ dap.configurations = setmetatable({}, {
   end,
 })
 
--- Initially update cwd in existing configurations
+-- Initially update cwd only for specified filetypes
 for lang, configs in pairs(original_configurations) do
-  set_cwd_in_configurations(configs)
+  if vim.tbl_contains(config_enhancements_fts, lang) then
+    set_cwd_in_configurations(configs)
+  end
 end
 
--- Autocommand to set up DAP keybindings on BufEnter (when entering a buffer)
+-- Ensure target directory is created when launching a DAP session if necessary
+local original_dap_run = dap.run
+dap.run = function(config, ...)
+  if config.cwd == get_target_directory_path() then
+    ensure_target_directory()
+  end
+  original_dap_run(config, ...)
+end
+
+-- Autocommand to set up DAP keybindings on BufEnter for relevant filetypes
 vim.api.nvim_create_autocmd("BufEnter", {
   callback = function(args)
-    setup_debugger_mappings(args.buf)
+    if vim.tbl_contains(config_enhancements_fts, vim.bo[args.buf].filetype) then
+      setup_debugger_mappings(args.buf)
+    end
   end,
 })
