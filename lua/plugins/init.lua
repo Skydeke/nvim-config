@@ -62,11 +62,11 @@ return {
       end
       dap.listeners.before.event_terminated["dapui_config"] = function()
         dapui.close()
-        vim.cmd "NvimTreeOpen"
+        require("nvim-tree.api").tree.toggle { path = "", find_file = false, update_root = false, focus = false }
       end
       dap.listeners.before.event_exited["dapui_config"] = function()
         dapui.close()
-        vim.cmd "NvimTreeOpen"
+        require("nvim-tree.api").tree.toggle { path = "", find_file = false, update_root = false, focus = false }
       end
     end,
   },
@@ -196,5 +196,12 @@ return {
         desc = "Quickfix List (Trouble)",
       },
     },
+  },
+  {
+    "nvim-tree/nvim-tree.lua",
+    cmd = { "NvimTreeToggle", "NvimTreeFocus" },
+    opts = function()
+      return require "configs.nvimtree"
+    end,
   },
 }
