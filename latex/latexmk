@@ -1,2 +1,3 @@
 #!/bin/sh
-docker run -i --rm -w "$(pwd)" -v "$(pwd):$(pwd)" my_latex:latest latexmk "$@"
+image=$(grep 'image:' $(pwd)/docker-compose.yaml | awk '{print $2}')
+docker run -i --rm -w "$(pwd)" -v "$(pwd):$(pwd)" "$image" latexmk "$@"
