@@ -31,6 +31,7 @@ M.mason = {
     "css-lsp", -- CSS-LSP
     "typescript-language-server", -- TS/JS LSP
     "firefox-debug-adapter", -- DAP Firefox
+    "prettier", -- Formatter for HTML, CSS...
   },
 }
 

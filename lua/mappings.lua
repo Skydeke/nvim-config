@@ -5,6 +5,7 @@ local rem_mappings = {
     "<leader>n",
     "<leader>ds",
     "<leader>ma",
+    "<leader>gt",
   },
 }
 
@@ -27,6 +28,12 @@ local mappings = {
       "<cmd> Noice telescope <CR>",
       {
         desc = "Display all Notifications",
+      },
+    },
+    ["<leader>dd"] = {
+      "<cmd> DiffviewOpen <CR>",
+      {
+        desc = "Diff Open",
       },
     },
 

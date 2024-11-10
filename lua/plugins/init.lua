@@ -130,6 +130,14 @@ return {
     },
   },
   {
+    "sindrets/diffview.nvim",
+    lazy = false,
+    dependencies = {},
+    config = function()
+      require "configs.diffview"
+    end,
+  },
+  {
     "NeogitOrg/neogit",
     lazy = false,
     dependencies = {
@@ -137,7 +145,9 @@ return {
       "sindrets/diffview.nvim",
       "nvim-telescope/telescope.nvim",
     },
-    config = true,
+    config = function()
+      require "configs.neogit"
+    end,
   },
   {
     "nvim-java/nvim-java",
