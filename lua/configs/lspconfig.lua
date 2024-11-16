@@ -163,6 +163,8 @@ local servers = {
           "mail",
           "plaintext",
         },
+        checkFrequency = "save",
+        completionEnabled = true,
       },
     },
     on_attach = function(client, bufnr)
