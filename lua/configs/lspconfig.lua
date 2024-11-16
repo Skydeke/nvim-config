@@ -111,40 +111,6 @@ capabilities.textDocument.completion.completionItem = {
 }
 capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
-require("java").setup {
-  jdk = {
-    auto_install = false,
-  },
-  notifications = {
-    -- enable 'Configuring DAP' & 'DAP configured' messages on start up
-    dap = true,
-  },
-
-  -- We do multiple verifications to make sure things are in place to run this
-  -- plugin
-  verification = {
-    -- nvim-java checks for the order of execution of following
-    -- * require('java').setup()
-    -- * require('lspconfig').jdtls.setup()
-    -- IF they are not executed in the correct order, you will see a error
-    -- notification.
-    -- Set following to false to disable the notification if you know what you
-    -- are doing
-    invalid_order = true,
-    -- nvim-java checks if the require('java').setup() is called multiple
-    -- times.
-    -- IF there are multiple setup calls are executed, an error will be shown
-    -- Set following property value to false to disable the notification if
-    -- you know what you are doing
-    duplicate_setup_calls = true,
-    -- nvim-java checks if nvim-java/mason-registry is added correctly to
-    -- mason.nvim plugin.
-    -- IF it's not registered correctly, an error will be thrown and nvim-java
-    -- will stop setup
-    invalid_mason_registry = true,
-  },
-}
-
 local servers = {
   clangd = {},
   ltex = {
@@ -165,6 +131,29 @@ local servers = {
         },
         checkFrequency = "save",
         completionEnabled = true,
+        dictionary = (function()
+          -- For dictionary, search for files in the runtime to have
+          -- and include them as externals the format for them is
+          -- dict/{LANG}.txt
+          --
+          -- Also add dict/default.txt to all of them
+          local files = {}
+          for _, file in ipairs(vim.api.nvim_get_runtime_file("dict/*", true)) do
+            local lang = vim.fn.fnamemodify(file, ":t:r")
+            local fullpath = vim.fs.normalize(file, ":p")
+            files[lang] = { ":" .. fullpath }
+          end
+
+          if files.default then
+            for lang, _ in pairs(files) do
+              if lang ~= "default" then
+                vim.list_extend(files[lang], files.default)
+              end
+            end
+            files.default = nil
+          end
+          return files
+        end)(),
       },
     },
     on_attach = function(client, bufnr)
@@ -235,6 +224,50 @@ local servers = {
   ts_ls = {},
 }
 
+-- Ltex-ls reuires client side
+-- configs, that the wrapper ltex-ls.nvim does for us
+require("ltex-ls").setup {
+  use_spellfile = false,
+  window_border = "single",
+  capabilities = capabilities,
+  on_attach = servers.ltex.on_attach,
+  settings = servers.ltex.settings,
+}
+
+require("java").setup {
+  jdk = {
+    auto_install = false,
+  },
+  notifications = {
+    -- enable 'Configuring DAP' & 'DAP configured' messages on start up
+    dap = true,
+  },
+
+  -- We do multiple verifications to make sure things are in place to run this
+  -- plugin
+  verification = {
+    -- nvim-java checks for the order of execution of following
+    -- * require('java').setup()
+    -- * require('lspconfig').jdtls.setup()
+    -- IF they are not executed in the correct order, you will see a error
+    -- notification.
+    -- Set following to false to disable the notification if you know what you
+    -- are doing
+    invalid_order = true,
+    -- nvim-java checks if the require('java').setup() is called multiple
+    -- times.
+    -- IF there are multiple setup calls are executed, an error will be shown
+    -- Set following property value to false to disable the notification if
+    -- you know what you are doing
+    duplicate_setup_calls = true,
+    -- nvim-java checks if nvim-java/mason-registry is added correctly to
+    -- mason.nvim plugin.
+    -- IF it's not registered correctly, an error will be thrown and nvim-java
+    -- will stop setup
+    invalid_mason_registry = true,
+  },
+}
+
 for name, opts in pairs(servers) do
   if opts.on_init == nil then
     opts.on_init = configs.on_init
@@ -248,5 +281,7 @@ for name, opts in pairs(servers) do
     opts.capabilities = capabilities
   end
 
-  lspconfig[name].setup(opts)
+  if name ~= "ltex" then
+    lspconfig[name].setup(opts)
+  end
 end

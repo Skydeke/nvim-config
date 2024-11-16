@@ -130,6 +130,12 @@ return {
     },
   },
   {
+    "Skydeke/ltex-ls.nvim",
+    dependencies = {
+      "neovim/nvim-lspconfig",
+    },
+  },
+  {
     "sindrets/diffview.nvim",
     lazy = false,
     dependencies = {},
