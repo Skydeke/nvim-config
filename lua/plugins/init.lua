@@ -188,10 +188,11 @@ return {
   },
   {
     "folke/trouble.nvim",
+    cmd = "Trouble",
+    lazy = false, -- To register Trouble-Autocmds
     opts = function()
       require "configs.trouble"
     end,
-    cmd = "Trouble",
   },
   {
     "nvim-tree/nvim-tree.lua",
