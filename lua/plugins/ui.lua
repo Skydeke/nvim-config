@@ -16,6 +16,7 @@ return {
   },
   {
     "stevearc/dressing.nvim",
+    -- Installed because https://github.com/folke/noice.nvim/issues/938
     event = "VeryLazy",
     opts = {
       select = {
