@@ -1,6 +1,0 @@
-#!/bin/sh
-# Extract the image name from docker-compose.yaml, default to my_latex:latest if not found
-image=$(grep 'image:' $(pwd)/docker-compose.yaml | awk '{print $2}' || echo "my_latex:latest")
-# Use the default if the image variable is empty
-image=${image:-my_latex:latest}
-docker run -i --rm -w "$(pwd)" -v "$(pwd):$(pwd)" "$image" latexindent "$@"
