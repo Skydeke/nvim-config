@@ -15,6 +15,7 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
     end
   end,
 })
+
 -- LaTeX use VimTex folding
 vim.api.nvim_create_autocmd({ "FileType" }, {
   pattern = "tex",
@@ -24,6 +25,7 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
   end,
 })
 
+-- Add Forrmat/Ebanle disable per buffer
 vim.api.nvim_create_user_command("FormatDisable", function(args)
   if args.bang then
     -- FormatDisable! will disable formatting just for this buffer
@@ -54,6 +56,48 @@ vim.api.nvim_create_autocmd("VimLeavePre", {
   group = alacrittyAutoGroup,
   callback = function()
     vim.fn.jobstart("alacritty msg --socket $ALACRITTY_SOCKET config -w $ALACRITTY_WINDOW_ID -r", { detach = true })
+  end,
+})
+
+-- Open Quickfixes using Trouble.nvim
+vim.api.nvim_create_autocmd("BufRead", {
+  callback = function(ev)
+    if vim.bo[ev.buf].buftype == "quickfix" then
+      vim.schedule(function()
+        -- Close the default quickfix window if it's open and open Trouble instead
+        vim.cmd [[cclose]]
+        vim.cmd [[Trouble qflist open]]
+      end)
+    end
+  end,
+})
+
+-- Listen for NeogitMerge event
+vim.api.nvim_create_autocmd("User", {
+  pattern = "NeogitMerge",
+  callback = function(event)
+    if event.data.status == "conflict" then
+      vim.notify("Merge conflict detected. Attempting to open Diffview...", vim.log.levels.WARN)
+
+      if pcall(vim.cmd, "DiffviewOpen") then
+      else
+        vim.notify("Failed to open Diffview.", vim.log.levels.ERROR)
+      end
+    end
+  end,
+})
+-- Listen for NeogitRebase event
+vim.api.nvim_create_autocmd("User", {
+  pattern = "NeogitRebase",
+  callback = function(event)
+    if event.data.status == "conflict" then
+      vim.notify("Rebase conflict detected. Attempting to open Diffview...", vim.log.levels.WARN)
+
+      if pcall(vim.cmd, "DiffviewOpen") then
+      else
+        vim.notify("Failed to open Diffview.", vim.log.levels.ERROR)
+      end
+    end
   end,
 })
 

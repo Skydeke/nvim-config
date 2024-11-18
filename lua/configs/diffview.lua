@@ -1,35 +1,4 @@
 local diffview = require "diffview"
-
--- Listen for NeogitMerge event
-vim.api.nvim_create_autocmd("User", {
-  pattern = "NeogitMerge",
-  callback = function(event)
-    if event.data.status == "conflict" then
-      vim.notify("Merge conflict detected. Attempting to open Diffview...", vim.log.levels.WARN)
-
-      if pcall(vim.cmd, "DiffviewOpen") then
-      else
-        vim.notify("Failed to open Diffview.", vim.log.levels.ERROR)
-      end
-    end
-  end,
-})
-
--- Listen for NeogitRebase event
-vim.api.nvim_create_autocmd("User", {
-  pattern = "NeogitRebase",
-  callback = function(event)
-    if event.data.status == "conflict" then
-      vim.notify("Rebase conflict detected. Attempting to open Diffview...", vim.log.levels.WARN)
-
-      if pcall(vim.cmd, "DiffviewOpen") then
-      else
-        vim.notify("Failed to open Diffview.", vim.log.levels.ERROR)
-      end
-    end
-  end,
-})
-
 diffview.setup {
   enhanced_diff_hl = true,
   default_args = {
