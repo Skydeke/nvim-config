@@ -101,6 +101,13 @@ vim.api.nvim_create_autocmd("User", {
   end,
 })
 
+-- Call formatter on buf write
+vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+  callback = function()
+    require("lint").try_lint()
+  end,
+})
+
 vim.filetype.add {
   pattern = { [".*/hypr/.*%.conf"] = "hyprlang" },
 }

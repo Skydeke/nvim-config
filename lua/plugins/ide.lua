@@ -18,6 +18,12 @@ return {
     end,
   },
   {
+    "mfussenegger/nvim-lint",
+    config = function()
+      require "configs.linter"
+    end,
+  },
+  {
     "nvim-treesitter/nvim-treesitter",
     opts = {
       ensure_installed = {
