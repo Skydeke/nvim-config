@@ -56,6 +56,25 @@ return {
     end,
   },
   {
+    "hrsh7th/nvim-cmp",
+    opts = {
+      sources = {
+        { name = "nvim_lsp" },
+        { name = "vimtex" },
+        { name = "path" },
+        { name = "buffer" },
+      },
+    },
+    dependencies = {
+      "hrsh7th/cmp-buffer", -- source for text in buffer
+      "hrsh7th/cmp-path", -- source for file system path
+      "hrsh7th/cmp-nvim-lsp", -- using LSP for source
+      "L3MON4D3/LuaSnip", -- snippet engine
+      "saadparwaiz1/cmp_luasnip", -- using LuaSnip for source
+      "micangl/cmp-vimtex", -- source of vimtex for latex
+    },
+  },
+  {
     "lervag/vimtex",
     lazy = false, -- we don't want to lazy load VimTeX
     config = function()
