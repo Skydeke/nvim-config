@@ -93,6 +93,62 @@ local debugger_mappings = {
   },
 }
 
+local function read_json_file(filepath)
+  local uv = vim.loop
+  local fd = uv.fs_open(filepath, "r", 438) -- 438 is the default file permission
+  if not fd then
+    vim.notify("Could not open file: " .. filepath, vim.log.levels.ERROR)
+    return nil
+  end
+
+  local stat = uv.fs_fstat(fd)
+  if not stat then
+    vim.notify("Could not stat file: " .. filepath, vim.log.levels.ERROR)
+    uv.fs_close(fd)
+    return nil
+  end
+
+  local data = uv.fs_read(fd, stat.size, 0)
+  uv.fs_close(fd)
+
+  if not data then
+    vim.notify("Could not read file: " .. filepath, vim.log.levels.ERROR)
+    return nil
+  end
+
+  local ok, parsed = pcall(vim.json.decode, data)
+  if not ok then
+    vim.notify("Invalid JSON in file: " .. filepath, vim.log.levels.ERROR)
+    return nil
+  end
+
+  return parsed
+end
+
+local function run_pre_launch_task(preLaunchTask)
+  if not preLaunchTask then
+    return
+  end
+
+  local tasks = read_json_file(vim.fn.getcwd() .. "/.vscode/tasks.json")
+  if not tasks or not tasks.tasks then
+    return
+  end
+
+  for _, task in ipairs(tasks.tasks) do
+    if task.label == preLaunchTask then
+      local command = task.command
+      if command then
+        vim.notify("Running preLaunchTask: " .. preLaunchTask)
+        vim.fn.system(command)
+      else
+        vim.notify("No command found for preLaunchTask: " .. preLaunchTask, vim.log.levels.WARN)
+      end
+      return
+    end
+  end
+end
+
 local function get_target_directory_path()
   return vim.fn.getcwd() .. "/" .. target_dir
 end
@@ -158,6 +214,9 @@ end
 -- Ensure target directory is created when launching a DAP session if necessary
 local original_dap_run = dap.run
 dap.run = function(config, ...)
+  if config.preLaunchTask then
+    run_pre_launch_task(config.preLaunchTask)
+  end
   if config.cwd == get_target_directory_path() then
     ensure_target_directory()
   end
@@ -168,5 +227,13 @@ end
 vim.api.nvim_create_autocmd("BufEnter", {
   callback = function(args)
     setup_debugger_mappings(args.buf)
+  end,
+})
+
+vim.api.nvim_create_autocmd("BufWritePost", {
+  pattern = { ".vscode/launch.json", ".vscode/tasks.json" },
+  callback = function()
+    require("dap.ext.vscode").load_launchjs()
+    vim.notify "DAP configurations reloaded."
   end,
 })
