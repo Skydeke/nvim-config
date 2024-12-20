@@ -14,7 +14,7 @@ local options = {
     if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
       return
     end
-    return { timeout_ms = 500, lsp_format = false }
+    return { timeout_ms = 5000, lsp_format = false }
   end,
 }
 
