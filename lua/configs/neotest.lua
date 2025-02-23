@@ -2,6 +2,7 @@ local testing_mappings = {
   n = {
     ["<leader>ta"] = {
       function()
+        _ = require("configs.neotest-proxy")[vim.bo.filetype]
         require("neotest").run.run(vim.fn.getcwd(), true)
         require("neotest").summary.open()
         require("neotest").output_panel.open()
@@ -10,6 +11,7 @@ local testing_mappings = {
     },
     ["<leader>tf"] = {
       function()
+        _ = require("configs.neotest-proxy")[vim.bo.filetype]
         require("neotest").run.run(vim.fn.expand "%")
         require("neotest").output_panel.open()
       end,
@@ -17,6 +19,7 @@ local testing_mappings = {
     },
     ["<leader>tm"] = {
       function()
+        _ = require("configs.neotest-proxy")[vim.bo.filetype]
         require("neotest").run.run()
         require("neotest").output_panel.open()
       end,
@@ -24,6 +27,7 @@ local testing_mappings = {
     },
     ["<leader>ts"] = {
       function()
+        _ = require("configs.neotest-proxy")[vim.bo.filetype]
         require("neotest").run.stop()
         require("neotest").summary.close()
         require("neotest").output_panel.close()
@@ -43,8 +47,7 @@ end
 
 require("neotest").setup {
   adapters = {
-    require "neotest-jdtls",
-    -- require "neotest-java",
+    -- no adapters registered on initial setup
   },
   quickfix = {
     open = function()
