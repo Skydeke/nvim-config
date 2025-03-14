@@ -4,6 +4,7 @@ local o = vim.o
 o.relativenumber = true
 o.foldenable = false -- Dont fold on File-Open
 o.foldlevel = 99 -- Start with all folds open
+o.textwidth = 110
 
 vim.api.nvim_create_autocmd({ "FileType" }, {
   callback = function()
