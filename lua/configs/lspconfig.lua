@@ -109,7 +109,6 @@ capabilities.textDocument.completion.completionItem = {
     },
   },
 }
-capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
 local servers = {
   clangd = {},

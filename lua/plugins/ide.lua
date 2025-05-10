@@ -61,23 +61,76 @@ return {
       require("nvim-treesitter.configs").setup(opts)
     end,
   },
+  { import = "nvchad.blink.lazyspec" },
   {
-    "hrsh7th/nvim-cmp",
+    "Saghen/blink.cmp",
+    event = "InsertEnter",
+    dependencies = {
+      "saghen/blink.compat", -- nvim-cmp sources in blink
+      "L3MON4D3/LuaSnip", -- snippet engine
+      "micangl/cmp-vimtex", -- source of vimtex for latex
+    },
     opts = {
       sources = {
-        { name = "nvim_lsp" },
-        { name = "vimtex" },
-        { name = "path" },
-        { name = "buffer" },
+        default = { "vimtex", "lsp", "path", "snippets", "buffer" },
+        providers = {
+          vimtex = {
+            name = "vimtex",
+            module = "blink.compat.source",
+            score_offset = 300, -- make VimTeX completions appear at the very top
+          },
+        },
       },
-    },
-    dependencies = {
-      "hrsh7th/cmp-buffer", -- source for text in buffer
-      "hrsh7th/cmp-path", -- source for file system path
-      "hrsh7th/cmp-nvim-lsp", -- using LSP for source
-      "L3MON4D3/LuaSnip", -- snippet engine
-      "saadparwaiz1/cmp_luasnip", -- using LuaSnip for source
-      "micangl/cmp-vimtex", -- source of vimtex for latex
+      snippets = { preset = "luasnip" },
+      completion = {
+        accept = { auto_brackets = { enabled = true } },
+        documentation = {
+          auto_show = true,
+          auto_show_delay_ms = 250,
+          update_delay_ms = 50,
+          treesitter_highlighting = true,
+          window = { border = "rounded" },
+        },
+        list = {
+          selection = {
+            preselect = true,
+            auto_insert = false,
+          },
+        },
+        menu = {
+          border = "rounded",
+        },
+      },
+      keymap = {
+        ["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
+        ["<C-e>"] = { "hide", "fallback" },
+        ["<CR>"] = { "accept", "fallback" },
+        ["<Tab>"] = {
+          function(cmp)
+            return cmp.select_next()
+          end,
+          "snippet_forward",
+          "fallback",
+        },
+        ["<S-Tab>"] = {
+          function(cmp)
+            return cmp.select_prev()
+          end,
+          "snippet_backward",
+          "fallback",
+        },
+        ["<Up>"] = { "select_prev", "fallback" },
+        ["<Down>"] = { "select_next", "fallback" },
+        ["<C-p>"] = { "select_prev", "fallback" },
+        ["<C-n>"] = { "select_next", "fallback" },
+        ["<C-up>"] = { "scroll_documentation_up", "fallback" },
+        ["<C-down>"] = { "scroll_documentation_down", "fallback" },
+      },
+      -- Experimental signature help support
+      signature = {
+        enabled = true,
+        window = { border = "rounded" },
+      },
     },
   },
   {
@@ -108,7 +161,7 @@ return {
       "neovim/nvim-lspconfig",
       "mfussenegger/nvim-dap",
       {
-        "williamboman/mason.nvim",
+        "mason-org/mason.nvim",
         opts = {
           registries = {
             "github:nvim-java/mason-registry",
