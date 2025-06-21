@@ -1,6 +1,6 @@
 local testing_mappings = {
   n = {
-    ["<leader>ta"] = {
+    ["<leader>tta"] = {
       function()
         _ = require("configs.neotest-proxy")[vim.bo.filetype]
         require("neotest").run.run(vim.fn.getcwd(), true)
@@ -9,7 +9,7 @@ local testing_mappings = {
       end,
       { desc = "Run all Tests" },
     },
-    ["<leader>tf"] = {
+    ["<leader>ttf"] = {
       function()
         _ = require("configs.neotest-proxy")[vim.bo.filetype]
         require("neotest").run.run(vim.fn.expand "%")
@@ -17,7 +17,7 @@ local testing_mappings = {
       end,
       { desc = "Run open Class" },
     },
-    ["<leader>tm"] = {
+    ["<leader>ttm"] = {
       function()
         _ = require("configs.neotest-proxy")[vim.bo.filetype]
         require("neotest").run.run()
@@ -25,7 +25,7 @@ local testing_mappings = {
       end,
       { desc = "Run Method" },
     },
-    ["<leader>ts"] = {
+    ["<leader>tts"] = {
       function()
         _ = require("configs.neotest-proxy")[vim.bo.filetype]
         require("neotest").run.stop()
