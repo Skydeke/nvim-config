@@ -39,27 +39,65 @@ local mappings = {
 
     ["<leader>ix"] = {
       "<cmd>Trouble diagnostics toggle<cr>",
-      desc = "Diagnostics (Trouble)",
+      {
+        desc = "Diagnostics (Trouble)",
+      },
     },
     ["<leader>iX"] = {
       "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
-      desc = "Buffer Diagnostics (Trouble)",
+      {
+        desc = "Buffer Diagnostics (Trouble)",
+      },
     },
     ["<leader>is"] = {
       "<cmd>Trouble symbols toggle focus=false<cr>",
-      desc = "Symbols (Trouble)",
+      {
+        desc = "Symbols (Trouble)",
+      },
     },
     ["<leader>il"] = {
       "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
-      desc = "LSP Definitions / References / ... (Trouble)",
+      {
+        desc = "LSP Definitions / References / ... (Trouble)",
+      },
     },
     ["<leader>iL"] = {
       "<cmd>Trouble loclist toggle<cr>",
-      desc = "Location List (Trouble)",
+      {
+        desc = "Location List (Trouble)",
+      },
     },
     ["<leader>iQ"] = {
       "<cmd>Trouble qflist toggle<cr>",
-      desc = "Quickfix List (Trouble)",
+      {
+        desc = "Quickfix List (Trouble)",
+      },
+    },
+
+    -- VS Tasks
+    ["<leader>ta"] = {
+      "<cmd>lua require('configs.vstask').show_tasks()<CR>",
+      {
+        desc = "Show tasks",
+      },
+    },
+    ["<leader>ti"] = {
+      "<cmd>lua require('configs.vstask').show_inputs()<CR>",
+      {
+        desc = "Task inputs",
+      },
+    },
+    ["<leader>tj"] = {
+      "<cmd>lua require('configs.vstask').show_jobs()<CR>",
+      {
+        desc = "View jobs",
+      },
+    },
+    ["<leader>tr"] = {
+      "<cmd>lua require('telescope').extensions.vstask.run()<CR>",
+      {
+        desc = "Run command",
+      },
     },
 
     -- ["<leader>fm"] = {
