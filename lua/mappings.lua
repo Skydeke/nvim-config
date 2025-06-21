@@ -6,6 +6,8 @@ local rem_mappings = {
     "<leader>ds",
     "<leader>ma",
     "<leader>gt",
+    "<Tab>",
+    "<S-Tab>",
   },
 }
 
@@ -100,12 +102,32 @@ local mappings = {
       },
     },
 
+    -- Comment mapping for normal mode
+    ["<leader>/"] = {
+      "gcc", 
+      {
+        desc = "Toggle comment (simulate gcc)",
+        remap = true,
+        silent = true,
+      }
+    },
+
     -- ["<leader>fm"] = {
     --   function()
     --     vim.lsp.buf.format { async = true }
     --   end,
     --   "LSP formatting",
     -- },
+  },
+  v = {
+    ["<leader>/"] = {
+      "gc", 
+      {
+        desc = "Toggle comment (simulate gc)",
+        remap = true,
+        silent = true,
+      }
+    },
   },
 }
 

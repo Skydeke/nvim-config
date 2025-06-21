@@ -41,6 +41,9 @@ M.ui = {
       end,
     },
   },
+  tabufline = {
+    enabled = false, -- Disable the tab line
+  },
 }
 
 M.mason = {
