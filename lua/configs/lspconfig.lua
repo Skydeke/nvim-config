@@ -221,6 +221,19 @@ local servers = {
   html = {},
   cssls = {},
   ts_ls = {},
+  rust_analyzer = {
+    diagnostics = {
+      enable = true,
+    },
+    cargo = {
+      buildScripts = {
+        enable = true,
+      },
+    },
+    procMacro = {
+      enable = true,
+    },
+  },
 }
 
 -- Ltex-ls reuires client side
@@ -233,19 +246,19 @@ require("ltex-ls").setup {
   settings = servers.ltex.settings,
 }
 
-require("java").setup {
-  jdk = {
-    auto_install = false,
-  },
-  notifications = {
-    dap = true,
-  },
-  verification = {
-    invalid_order = true,
-    duplicate_setup_calls = true,
-    invalid_mason_registry = true,
-  },
-}
+-- require("java").setup {
+--   jdk = {
+--     auto_install = false,
+--   },
+--   notifications = {
+--     dap = true,
+--   },
+--   verification = {
+--     invalid_order = true,
+--     duplicate_setup_calls = true,
+--     invalid_mason_registry = true,
+--   },
+-- }
 
 for name, opts in pairs(servers) do
   if opts.on_init == nil then

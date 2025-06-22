@@ -47,7 +47,6 @@ end
 
 require("neotest").setup {
   adapters = {
-    -- no adapters registered on initial setup
   },
   quickfix = {
     open = function()

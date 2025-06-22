@@ -86,7 +86,6 @@ local debugger_mappings = {
     ["<leader>dc"] = {
       function()
         require("dapui").close()
-        require("nvim-tree.api").tree.toggle { path = "", find_file = false, update_root = false, focus = false }
       end,
       { desc = "Close DAP-UI" },
     },

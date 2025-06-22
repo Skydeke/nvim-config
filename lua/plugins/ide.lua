@@ -49,6 +49,7 @@ return {
         "python",
         "javascript",
         "latex", -- requires tree-sitter-cli, auto-install fails :TSINSTALLFROMGRAMAR
+        "rust",
       },
     },
     config = function(_, opts)
@@ -181,6 +182,20 @@ return {
     },
     config = function()
       require("configs.vstask").setup()
+    end,
+  },
+  {
+    "mrcjkb/rustaceanvim",
+    version = "^6",
+    lazy = false,
+    init = function()
+      require("configs.neotest-proxy").rust = "rustaceanvim.neotest"
+    end,
+    opts = {},
+    config = function(_, opts)
+      local adapter = require "rustaceanvim.neotest"(opts)
+      local adapters = require("neotest.config").adapters
+      table.insert(adapters, adapter)
     end,
   },
 }

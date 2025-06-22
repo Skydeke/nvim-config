@@ -7,6 +7,7 @@ return {
       "antoinemadec/FixCursorHold.nvim",
       "nvim-treesitter/nvim-treesitter",
     },
+    lazy = false,
     config = function()
       require "configs.neotest"
     end,
