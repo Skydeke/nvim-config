@@ -102,11 +102,85 @@ local mappings = {
       },
     },
 
+    -- Harpoon
+    ["<leader>a"] = {
+      function()
+        require("harpoon"):list():add()
+      end,
+      {
+        desc = "Add file to harpoon",
+      },
+    },
+    ["<leader>e"] = {
+      function()
+        require("harpoon").ui:toggle_quick_menu(require("harpoon"):list())
+      end,
+      {
+        desc = "Toggle harpoon quick menu",
+      },
+    },
+    ["<leader>1"] = {
+      function()
+        require("harpoon"):list():select(1)
+      end,
+      {
+        desc = "Go to harpoon file 1",
+      },
+    },
+    ["<leader>2"] = {
+      function()
+        require("harpoon"):list():select(2)
+      end,
+      {
+        desc = "Go to harpoon file 2",
+      },
+    },
+    ["<leader>3"] = {
+      function()
+        require("harpoon"):list():select(3)
+      end,
+      {
+        desc = "Go to harpoon file 3",
+      },
+    },
+    ["<leader>4"] = {
+      function()
+        require("harpoon"):list():select(4)
+      end,
+      {
+        desc = "Go to harpoon file 4",
+      },
+    },
+    ["<leader>j"] = {
+      function()
+        require("harpoon"):list():prev()
+      end,
+      {
+        desc = "Previous harpoon file",
+      },
+    },
+    ["<leader>k"] = {
+      function()
+        require("harpoon"):list():next()
+      end,
+      {
+        desc = "Next harpoon file",
+      },
+    },
+
+    -- NvimTree
+    ["<leader>t"] = {
+      "<cmd>NvimTreeToggle<CR>",
+      {
+        desc = "Toggle nvimtree",
+      },
+    },
+
     -- Comment mapping for normal mode
     ["<leader>/"] = {
       "gcc", 
       {
-        desc = "Toggle comment (simulate gcc)",
+        desc = "Toggle comment",
         remap = true,
         silent = true,
       }
@@ -123,7 +197,7 @@ local mappings = {
     ["<leader>/"] = {
       "gc", 
       {
-        desc = "Toggle comment (simulate gc)",
+        desc = "Toggle comment",
         remap = true,
         silent = true,
       }
