@@ -3,7 +3,9 @@ local testing_mappings = {
     ["<leader>tta"] = {
       function()
         _ = require("configs.neotest-proxy")[vim.bo.filetype]
-        require("neotest").run.run(vim.fn.getcwd(), true)
+        require("neotest").run.run(vim.fn.getcwd(), function()
+          vim.notify("Tests finished", vim.log.levels.INFO, { title = "Neotest" })
+        end)
         require("neotest").summary.open()
         require("neotest").output_panel.open()
       end,
