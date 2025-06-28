@@ -151,20 +151,22 @@ local mappings = {
         desc = "Go to harpoon file 4",
       },
     },
-    ["<leader>j"] = {
-      function()
-        require("harpoon"):list():prev()
-      end,
+    ["<leader>x"] = {
+      "<cmd>Bdelete<CR>",
       {
-        desc = "Previous harpoon file",
+        desc = "Close current buffer",
+      },
+    },
+    ["<leader>j"] = {
+      "<cmd>bprevious<CR>",
+      {
+        desc = "Previous buffer",
       },
     },
     ["<leader>k"] = {
-      function()
-        require("harpoon"):list():next()
-      end,
+      "<cmd>bnext<CR>",
       {
-        desc = "Next harpoon file",
+        desc = "Next buffer",
       },
     },
 
@@ -178,12 +180,12 @@ local mappings = {
 
     -- Comment mapping for normal mode
     ["<leader>/"] = {
-      "gcc", 
+      "gcc",
       {
         desc = "Toggle comment",
         remap = true,
         silent = true,
-      }
+      },
     },
 
     -- ["<leader>fm"] = {
@@ -195,12 +197,12 @@ local mappings = {
   },
   v = {
     ["<leader>/"] = {
-      "gc", 
+      "gc",
       {
         desc = "Toggle comment",
         remap = true,
         silent = true,
-      }
+      },
     },
   },
 }

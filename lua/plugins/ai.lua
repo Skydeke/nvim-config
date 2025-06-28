@@ -1,7 +1,6 @@
 return {
   {
     "olimorris/codecompanion.nvim",
-    branch = "feat/add-ollama-tools",
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-telescope/telescope.nvim",
@@ -106,4 +105,3 @@ return {
     end,
   },
 }
-

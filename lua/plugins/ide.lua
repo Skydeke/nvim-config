@@ -198,4 +198,8 @@ return {
       table.insert(adapters, adapter)
     end,
   },
+  {
+    "famiu/bufdelete.nvim",
+    lazy = false,
+  },
 }
