@@ -146,7 +146,7 @@ return {
     },
   },
   {
-    "Skydeke/ltex-ls.nvim",
+    "barreiroleo/ltex_extra.nvim",
     dependencies = {
       "neovim/nvim-lspconfig",
     },

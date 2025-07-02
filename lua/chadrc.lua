@@ -52,7 +52,7 @@ M.mason = {
     "clangd", -- CPP LSP
     "clang-format", -- CPP Formatter
     "codelldb", -- Debugger
-    "ltex-ls", -- Spelling LSP
+    "ltex-ls-plus", -- Spelling LSP
     "dockerfile-language-server", -- Dockerfile LSP
     "docker-compose-language-service", -- Compose LSP
     "helm-ls", -- Helm LSP

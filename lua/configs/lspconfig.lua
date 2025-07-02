@@ -1,6 +1,5 @@
 -- load defaults i.e lua_lsp
 require("nvchad.configs.lspconfig").defaults()
-local lspconfig = require "lspconfig"
 local configs = require "nvchad.configs.lspconfig"
 local mappings = {
   n = {
@@ -112,7 +111,7 @@ capabilities.textDocument.completion.completionItem = {
 
 local servers = {
   clangd = {},
-  ltex = {
+  ltex_plus = {
     settings = {
       ltex = {
         language = "en-GB",
@@ -186,6 +185,10 @@ local servers = {
           vim.keymap.set(mode, key, val[1], key_opts)
         end
       end
+      require("ltex_extra").setup {
+        load_langs = { "en-GB", "de-DE" },
+        init_check = true,
+      }
       on_attach(client, bufnr)
     end,
   },
@@ -236,16 +239,6 @@ local servers = {
   },
 }
 
--- Ltex-ls reuires client side
--- configs, that the wrapper ltex-ls.nvim does for us
-require("ltex-ls").setup {
-  use_spellfile = false,
-  window_border = "single",
-  capabilities = capabilities,
-  on_attach = servers.ltex.on_attach,
-  settings = servers.ltex.settings,
-}
-
 -- require("java").setup {
 --   jdk = {
 --     auto_install = false,
@@ -272,8 +265,6 @@ for name, opts in pairs(servers) do
   if opts.capabilities == nil then
     opts.capabilities = capabilities
   end
-
-  if name ~= "ltex" then
-    lspconfig[name].setup(opts)
-  end
+  vim.lsp.config(name, opts)
+  vim.lsp.enable(name)
 end
