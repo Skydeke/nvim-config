@@ -137,4 +137,8 @@ vim.filetype.add {
     ["docker-compose.yaml"] = "yaml.docker-compose",
     ["docker-compose.yml"] = "yaml.docker-compose", -- handle both extensions
   },
+  pattern = {
+    -- match any path that ends with something like *compose*.yml or *compose*.yaml
+    [".*compose.*%.ya?ml"] = "yaml.docker-compose",
+  },
 }
