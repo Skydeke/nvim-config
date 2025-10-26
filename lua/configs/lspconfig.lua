@@ -6,13 +6,13 @@ local mappings = {
     -- LSP Diagnostics
     ["<leader>lgp"] = {
       function()
-        vim.diagnostic.goto_prev()
+        vim.diagnostic.jump { count = -1, float = false }
       end,
       { desc = "Go to previous diagnostic" },
     },
     ["<leader>lgn"] = {
       function()
-        vim.diagnostic.goto_next()
+        vim.diagnostic.jump { count = 1, float = false }
       end,
       { desc = "Go to next diagnostic" },
     },

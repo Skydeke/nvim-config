@@ -74,4 +74,35 @@ return {
       require("configs.harpoon").setup()
     end,
   },
+  {
+    "rachartier/tiny-inline-diagnostic.nvim",
+    event = "VeryLazy",
+    priority = 1000,
+    lazy = false,
+    config = function()
+      require("tiny-inline-diagnostic").setup {
+        options = {
+          multilines = { enabled = true },
+          show_source = { enabled = true },
+        },
+      }
+      -- Disable global virtual text and virtual lines
+      local disable_virtual = function()
+        vim.diagnostic.config { virtual_text = false, virtual_lines = false }
+        for _, ns in pairs(vim.diagnostic.get_namespaces()) do
+          vim.diagnostic.config({ virtual_text = false, virtual_lines = false }, ns)
+        end
+      end
+
+      -- Run immediately for existing namespaces
+      disable_virtual()
+
+      -- Ensure any new LSP client also respects this
+      vim.api.nvim_create_autocmd("LspAttach", {
+        callback = function(args)
+          vim.diagnostic.config { virtual_text = false }
+        end,
+      })
+    end,
+  },
 }
