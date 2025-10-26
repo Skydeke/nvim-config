@@ -6,8 +6,6 @@ local rem_mappings = {
     "<leader>ds",
     "<leader>ma",
     "<leader>gt",
-    "<Tab>",
-    "<S-Tab>",
   },
 }
 
