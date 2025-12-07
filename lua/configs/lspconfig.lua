@@ -241,17 +241,10 @@ local servers = {
 require("java").setup {
   jdk = {
     auto_install = false,
-  },
-  notifications = {
-    dap = true,
-  },
-  verification = {
-    invalid_order = true,
-    duplicate_setup_calls = true,
-    invalid_mason_registry = true,
+    version = "17",
   },
 }
-require("lspconfig").jdtls.setup {}
+vim.lsp.enable "jdtls"
 
 for name, opts in pairs(servers) do
   if opts.on_init == nil then
