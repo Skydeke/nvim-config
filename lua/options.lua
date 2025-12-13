@@ -5,6 +5,7 @@ o.relativenumber = true
 o.foldenable = false -- Dont fold on File-Open
 o.foldlevel = 99 -- Start with all folds open
 o.textwidth = 110
+o.inccommand = "nosplit"
 
 vim.api.nvim_create_autocmd({ "FileType" }, {
   callback = function()
@@ -69,35 +70,6 @@ vim.api.nvim_create_autocmd("BufRead", {
         vim.cmd [[cclose]]
         vim.cmd [[Trouble qflist open]]
       end)
-    end
-  end,
-})
-
--- Listen for NeogitMerge event
-vim.api.nvim_create_autocmd("User", {
-  pattern = "NeogitMerge",
-  callback = function(event)
-    if event.data.status == "conflict" then
-      vim.notify("Merge conflict detected. Attempting to open Diffview...", vim.log.levels.WARN)
-
-      if pcall(vim.cmd, "DiffviewOpen") then
-      else
-        vim.notify("Failed to open Diffview.", vim.log.levels.ERROR)
-      end
-    end
-  end,
-})
--- Listen for NeogitRebase event
-vim.api.nvim_create_autocmd("User", {
-  pattern = "NeogitRebase",
-  callback = function(event)
-    if event.data.status == "conflict" then
-      vim.notify("Rebase conflict detected. Attempting to open Diffview...", vim.log.levels.WARN)
-
-      if pcall(vim.cmd, "DiffviewOpen") then
-      else
-        vim.notify("Failed to open Diffview.", vim.log.levels.ERROR)
-      end
     end
   end,
 })
