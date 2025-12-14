@@ -72,7 +72,6 @@ M.mason = {
     "typescript-language-server", -- TS/JS LSP
     "firefox-debug-adapter", -- DAP Firefox
     "prettier", -- Formatter for HTML, CSS...
-    "tree-sitter-cli", -- for generating some special langauges like latex
     "rust-analyzer", -- Rust LSP
   },
 }

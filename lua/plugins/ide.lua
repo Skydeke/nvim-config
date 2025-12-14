@@ -48,7 +48,6 @@ return {
         "groovy",
         "python",
         "javascript",
-        "latex",
         "rust",
       },
     },
