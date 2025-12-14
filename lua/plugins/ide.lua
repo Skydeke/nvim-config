@@ -138,6 +138,38 @@ return {
     },
   },
   {
+    "akinsho/bufferline.nvim",
+    event = "VeryLazy",
+    dependencies = {
+      "nvim-tree/nvim-web-devicons",
+      "moll/vim-bbye",
+    },
+    config = function()
+      require("bufferline").setup {
+        options = {
+          mode = "tabs",
+          separator_style = "slant",
+          offsets = {
+            {
+              filetype = "NvimTree",
+              text = "File Explorer",
+              highlight = "BufferLineFill",
+              text_align = "center",
+              separator = false,
+            },
+          },
+        },
+      }
+    end,
+  },
+  {
+    "yorickpeterse/nvim-window",
+    keys = {
+      { "<leader>wj", "<cmd>lua require('nvim-window').pick()<cr>", desc = "nvim-window: Jump to window" },
+    },
+    config = true,
+  },
+  {
     "lervag/vimtex",
     lazy = false, -- we don't want to lazy load VimTeX
     config = function()
@@ -186,9 +218,5 @@ return {
       local adapters = require("neotest.config").adapters
       table.insert(adapters, adapter)
     end,
-  },
-  {
-    "famiu/bufdelete.nvim",
-    lazy = false,
   },
 }

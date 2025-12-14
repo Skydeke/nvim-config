@@ -13,6 +13,9 @@ M.base46 = {
     St_vtexSuccess = { fg = "#98c379" },
     St_vtexError = { fg = "#e06c75" },
   },
+  integrations = {
+    "bufferline",
+  },
 }
 
 M.ui = {
