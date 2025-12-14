@@ -27,7 +27,7 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
   end,
 })
 
--- Add Forrmat/Ebanle disable per buffer
+-- Add Format/Enable disable per buffer
 vim.api.nvim_create_user_command("FormatDisable", function(args)
   if args.bang then
     -- FormatDisable! will disable formatting just for this buffer
@@ -44,6 +44,51 @@ vim.api.nvim_create_user_command("FormatEnable", function()
   vim.g.disable_autoformat = false
 end, {
   desc = "Re-enable autoformat-on-save",
+})
+
+-- Autoclose unused empty Buffer
+vim.api.nvim_create_autocmd("BufEnter", {
+  group = vim.api.nvim_create_augroup("AutoCloseEmpty", { clear = true }),
+  callback = function()
+    -- Capture the buffer we just entered
+    local current_buf = vim.api.nvim_get_current_buf()
+
+    -- WRAPPER: Defer execution until the UI is stable (Fixes Harpoon crash)
+    vim.schedule(function()
+      -- Re-check validity after the delay
+      if not vim.api.nvim_buf_is_valid(current_buf) then
+        return
+      end
+
+      -- 1. Check special windows (NvimTree, etc)
+      local current_ft = vim.api.nvim_get_option_value("filetype", { buf = current_buf })
+      local current_bt = vim.api.nvim_get_option_value("buftype", { buf = current_buf })
+
+      if current_ft == "NvimTree" or current_bt ~= "" then
+        return
+      end
+
+      -- 2. Cleanup loop
+      for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+        if buf ~= current_buf and vim.api.nvim_buf_is_valid(buf) then
+          local name = vim.api.nvim_buf_get_name(buf)
+          local type = vim.api.nvim_get_option_value("buftype", { buf = buf })
+          local modified = vim.api.nvim_get_option_value("modified", { buf = buf })
+
+          -- Only delete if empty, unnamed, unmodified
+          if name == "" and type == "" and not modified then
+            -- CRITICAL SAFETY CHECK:
+            -- Is this buffer currently visible in any window?
+            -- If yes, DO NOT delete it, or you'll get the "E444" crash.
+            local windows = vim.fn.win_findbuf(buf)
+            if #windows == 0 then
+              vim.api.nvim_buf_delete(buf, { force = false })
+            end
+          end
+        end
+      end
+    end)
+  end,
 })
 
 -- Alacritty
