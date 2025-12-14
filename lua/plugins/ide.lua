@@ -48,7 +48,7 @@ return {
         "groovy",
         "python",
         "javascript",
-        "latex", -- requires tree-sitter-cli, auto-install fails :TSINSTALLFROMGRAMAR
+        "latex",
         "rust",
       },
     },
@@ -72,6 +72,11 @@ return {
       "micangl/cmp-vimtex", -- source of vimtex for latex
     },
     opts = {
+      enabled = function()
+        return not vim.list_contains({ "DressingInput", "NvimTree" }, vim.bo.filetype)
+          and vim.bo.buftype ~= "prompt"
+          and vim.b.completion ~= false
+      end,
       sources = {
         default = { "vimtex", "lsp", "path", "snippets", "buffer" },
         providers = {
