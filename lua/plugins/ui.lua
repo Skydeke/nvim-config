@@ -105,4 +105,66 @@ return {
       })
     end,
   },
+  {
+    "mawkler/modicator.nvim",
+    event = "BufEnter",
+    opts = {
+      show_warnings = true,
+      highlights = {
+        defaults = {
+          bold = true,
+          italic = false,
+        },
+        use_cursorline_background = false,
+      },
+    },
+    config = function(_, opts)
+      local function link_modicator_colors()
+        local function set_fg_from_bg(mod_name, st_name)
+          local _, hl = pcall(vim.api.nvim_get_hl, 0, { name = st_name })
+          local fg = hl.bg and string.format("#%06x", hl.bg) or "NONE"
+
+          vim.api.nvim_set_hl(0, mod_name, {
+            fg = fg,
+            bg = "NONE",
+            bold = true,
+          })
+        end
+
+        local mapping = {
+          { "NormalMode", "St_NormalMode" },
+          { "InsertMode", "St_InsertMode" },
+          { "VisualMode", "St_VisualMode" },
+          { "ReplaceMode", "St_ReplaceMode" },
+          { "CommandMode", "St_CommandMode" },
+          { "SelectMode", "St_SelectMode" },
+          { "TerminalMode", "St_TerminalMode" },
+          { "TerminalNormalMode", "St_NTerminalMode" },
+        }
+
+        for _, pair in ipairs(mapping) do
+          set_fg_from_bg(pair[1], pair[2])
+        end
+      end
+
+      -- Apply after modicator setup
+      require("modicator").setup(opts)
+
+      -- Initial apply
+      link_modicator_colors()
+
+      -- Reapply on theme reload
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "NvThemeReload",
+        callback = link_modicator_colors,
+      })
+    end,
+  },
+  {
+    "yorickpeterse/nvim-window",
+    keys = {
+      { "<leader>wj", "<cmd>lua require('nvim-window').pick()<cr>", desc = "nvim-window: Jump to window" },
+    },
+    config = true,
+  },
 }

@@ -6,6 +6,9 @@ o.foldenable = false -- Dont fold on File-Open
 o.foldlevel = 99 -- Start with all folds open
 o.textwidth = 110
 o.inccommand = "nosplit"
+o.cursorline = true
+o.number = true
+o.termguicolors = true
 
 vim.api.nvim_create_autocmd({ "FileType" }, {
   callback = function()

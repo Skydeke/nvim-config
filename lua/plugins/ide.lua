@@ -98,13 +98,6 @@ return {
     end,
   },
   {
-    "yorickpeterse/nvim-window",
-    keys = {
-      { "<leader>wj", "<cmd>lua require('nvim-window').pick()<cr>", desc = "nvim-window: Jump to window" },
-    },
-    config = true,
-  },
-  {
     "lervag/vimtex",
     lazy = false, -- we don't want to lazy load VimTeX
     config = function()
