@@ -5,11 +5,20 @@ local options = {
   formatters_by_ft = {
     lua = { "stylua" },
     yaml = { "yamlfix" },
-    tex = { "latexindent" },
+    tex = { "latexindent_no_log" },
     python = { "black" },
     css = { "prettier" },
     html = { "prettier" },
   },
+
+  formatters = {
+    latexindent_no_log = {
+      command = "latexindent",
+      args = { "-g", "/dev/null" },
+      stdin = true,
+    },
+  },
+
   format_on_save = function(bufnr)
     if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
       return
