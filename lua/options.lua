@@ -10,13 +10,16 @@ o.cursorline = true
 o.number = true
 o.termguicolors = true
 
-vim.api.nvim_create_autocmd({ "FileType" }, {
+vim.api.nvim_create_autocmd("FileType", {
   callback = function()
-    if require("nvim-treesitter.parsers").has_parser() then
-      o.foldmethod = "expr"
-      o.foldexpr = "nvim_treesitter#foldexpr()"
+    local ft = vim.bo.filetype
+    local ok, parser = pcall(vim.treesitter.get_parser, 0, ft, { error = false })
+
+    if parser then
+      vim.wo.foldmethod = "expr"
+      vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
     else
-      o.foldmethod = "syntax"
+      vim.wo.foldmethod = "syntax"
     end
   end,
 })
