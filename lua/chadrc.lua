@@ -73,6 +73,7 @@ M.mason = {
     "firefox-debug-adapter", -- DAP Firefox
     "prettier", -- Formatter for HTML, CSS...
     "rust-analyzer", -- Rust LSP
+    "tree-sitter-cli", -- Tree-Sitter-Cli
   },
 }
 
