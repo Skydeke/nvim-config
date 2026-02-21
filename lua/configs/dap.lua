@@ -1,7 +1,5 @@
 local dap = require "dap"
 
-require("dap.ext.vscode").load_launchjs()
-
 local config_enhancements_fts = { "java" } -- Automatically set cwd to target if it was unset for listed langs
 local target_dir = "target"
 
@@ -226,13 +224,5 @@ end
 vim.api.nvim_create_autocmd("BufEnter", {
   callback = function(args)
     setup_debugger_mappings(args.buf)
-  end,
-})
-
-vim.api.nvim_create_autocmd("BufWritePost", {
-  pattern = { ".vscode/launch.json", ".vscode/tasks.json" },
-  callback = function()
-    require("dap.ext.vscode").load_launchjs()
-    vim.notify "DAP configurations reloaded."
   end,
 })
