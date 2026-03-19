@@ -189,6 +189,7 @@ local servers = {
         load_langs = { "en-GB", "de-DE" },
         init_check = true,
       }
+      require("configs.ltex").register_command()
       on_attach(client, bufnr)
     end,
   },
