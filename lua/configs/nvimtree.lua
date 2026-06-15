@@ -1,6 +1,12 @@
 local config = require "nvchad.configs.nvimtree"
 local api = require "nvim-tree.api"
 
+config.view.adaptive_size = true
+config.view.width = {
+  min = 40,
+  max = -1,
+}
+
 -- Close nvim-tree automatically when the cursor moves away
 local function close_nvim_tree_on_cursor_move()
   local current_win = vim.api.nvim_get_current_win()
