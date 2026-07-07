@@ -156,15 +156,15 @@ local mappings = {
       },
     },
     ["<leader>j"] = {
-      "<cmd>bprevious<CR>",
-      {
-        desc = "Previous buffer",
-      },
-    },
-    ["<leader>k"] = {
       "<cmd>bnext<CR>",
       {
         desc = "Next buffer",
+      },
+    },
+    ["<leader>k"] = {
+      "<cmd>bprevious<CR>",
+      {
+        desc = "Previous buffer",
       },
     },
 

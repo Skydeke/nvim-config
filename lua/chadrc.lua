@@ -45,7 +45,7 @@ M.ui = {
     },
   },
   tabufline = {
-    enabled = false, -- Disable the tab line
+    enabled = true,
   },
 }
 
